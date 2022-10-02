@@ -7,6 +7,7 @@ import style from './Form.module.scss'
 import { donwloadFileFromAxios } from "./utils/donwload/file"
 import { isValideSize } from "./utils/validate/fileSize"
 import { Option } from "./types/option"
+import { calculateFileSize } from "./utils/calculateFileSize"
 
 export function Form() {
     const fileTypeOptions: Option[] = [
@@ -29,7 +30,7 @@ export function Form() {
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const calculetedFileSize = Number(fileSize) * Number(quantitieSize.value)
+        const calculetedFileSize = calculateFileSize(fileSize, quantitieSize.value)
 
         if (isValideSize(calculetedFileSize)) {
             axios.post('http://localhost:3003/generate', {
