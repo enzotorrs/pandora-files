@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Home } from './pages/Home';
+import './index.scss'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <h1>generated files teste</h1>
+    <Home></Home>
   </React.StrictMode>
 );
