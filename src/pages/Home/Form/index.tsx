@@ -8,6 +8,7 @@ import { donwloadFileFromAxios } from "./utils/donwload/file"
 import { isValideSize } from "./utils/validate/fileSize"
 import { Option } from "./types/option"
 import { calculateFileSize } from "./utils/calculateFileSize"
+import { useSnackbar } from "notistack"
 
 export function Form() {
     const fileTypeOptions: Option[] = [
@@ -27,6 +28,8 @@ export function Form() {
     const [downloadUrl, setDownloadUrl] = useState<string>('')
     const [fileType, setFileType] = useState<Option>(fileTypeOptions[0])
     const [quantitieSize, setQuantitieSize] = useState<Option>(quantitiesOptions[0])
+    const { enqueueSnackbar } = useSnackbar();
+
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -36,10 +39,13 @@ export function Form() {
             axios.post('http://localhost:3003/generate', {
                 size: calculetedFileSize,
             })
-                .then(response => setDownloadUrl(response.data.url))
+                .then(response => {
+                    setDownloadUrl(response.data.url)
+                    enqueueSnackbar("file has successfully generated", { variant: "success" })
+                })
         }
         else {
-            alert("file size needs to be greater than 0 and less than 10")
+            enqueueSnackbar("file size needs to be greater than 0 and less than 10", { variant: "error" })
         }
     }
 
