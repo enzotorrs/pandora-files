@@ -30,7 +30,6 @@ export function Form() {
     const [quantitieSize, setQuantitieSize] = useState<Option>(quantitiesOptions[0])
     const { enqueueSnackbar } = useSnackbar();
 
-
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const calculetedFileSize = calculateFileSize(fileSize, quantitieSize.value)
@@ -49,7 +48,7 @@ export function Form() {
         }
     }
 
-    const onClick = () => {
+    const downloadFile = () => {
         axios({
             url: 'http://localhost:3003' + downloadUrl,
             method: 'GET',
@@ -64,7 +63,7 @@ export function Form() {
         <>
             {downloadUrl && <button
                 className={style.download_button}
-                onClick={onClick}>download</button>}
+                onClick={downloadFile}>download</button>}
             {!downloadUrl &&
                 <form onSubmit={submitForm} className={style.form}>
                     <div className={style.wrapper}>
