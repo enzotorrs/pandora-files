@@ -4,11 +4,11 @@ import axios from "axios"
 import Select from "react-select"
 
 import style from './Form.module.scss'
-import { donwloadFileFromAxios } from "./utils/donwload/file"
 import { isValideSize } from "./utils/validate/fileSize"
 import { Option } from "./types/option"
 import { calculateFileSize } from "./utils/calculateFileSize"
 import { useSnackbar } from "notistack"
+import { downloadFile } from "./utils/download/file"
 
 export function Form() {
     const fileTypeOptions: Option[] = [
@@ -44,26 +44,15 @@ export function Form() {
                 })
         }
         else {
-            enqueueSnackbar("file size needs to be greater than 0 and less than 10", { variant: "error" })
+            enqueueSnackbar("file size needs to be greater than 0 and less than 10GB", { variant: "error" })
         }
-    }
-
-    const downloadFile = () => {
-        axios({
-            url: 'http://localhost:3003' + downloadUrl,
-            method: 'GET',
-            responseType: 'blob',
-        }).then((response) => {
-            const entireFileName = fileName + fileType?.value;
-            donwloadFileFromAxios(response, entireFileName);
-        })
     }
 
     return (
         <>
             {downloadUrl && <button
                 className={style.download_button}
-                onClick={downloadFile}>download</button>}
+                onClick={() => downloadFile(fileName, fileType.value, downloadUrl)}>download</button>}
             {!downloadUrl &&
                 <form onSubmit={submitForm} className={style.form}>
                     <div className={style.wrapper}>
