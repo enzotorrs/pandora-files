@@ -50,7 +50,7 @@ export function Form() {
                                 label="File name"
                                 required
                             />
-                            <FormControl sx={{ minWidth: 80 }}>
+                            <FormControl size="small" sx={{ minWidth: 80 }}>
                             <InputLabel id="fileTypeLabel">Type</InputLabel>
                             <Select
                                 labelId="fileTypeLabel"
@@ -74,7 +74,7 @@ export function Form() {
                                 label="File size"
                                 required
                             />
-                            <FormControl sx={{ minWidth: 80 }}>
+                            <FormControl size="small" sx={{ minWidth: 80 }}>
                             <InputLabel id="fileGLabel">Value</InputLabel>
                             <Select
                                 labelId="fileGLabel"

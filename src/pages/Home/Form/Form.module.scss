@@ -8,27 +8,16 @@
     align-items: center;
     justify-content: space-evenly;
     gap: 1em;
+
     input {
         padding: 10px;
         border-radius: 7px;
         border: 1px solid #f6f6f6;
     }
+
     .wrapper {
         display: flex;
         flex-direction: column;
         gap: 1em;
     }
-}
-
-.download_button {
-    height: 100%;
-    width: 100%;
-    border-radius: 25px;
-}
-
-.button {
-    padding: 10px;
-    background-color: #00A8CC;
-    border: 1px solid #f6f6f6;
-    border-radius: 7px;
 }
