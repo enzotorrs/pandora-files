@@ -7,6 +7,7 @@ import { calculateFileSize } from "./utils/calculateFileSize"
 import { useSnackbar } from "notistack"
 import { downloadFile } from "./utils/download/file"
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
+import { Loading } from "./Loading"
 
 export function Form() {
     const [fileName, setFileName] = useState<string>('')
@@ -14,17 +15,20 @@ export function Form() {
     const [downloadUrl, setDownloadUrl] = useState<string>('')
     const [fileType, setFileType] = useState<string>('')
     const [valueSize, setValueSize] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const calculetedFileSize = calculateFileSize(fileSize, valueSize)
+        setLoading(true)
 
         if (isValideSize(calculetedFileSize)) {
             axios.post('http://localhost:3003/generate', {
                 size: calculetedFileSize,
             })
                 .then(response => {
+                    setLoading(false)
                     setDownloadUrl(response.data.url)
                     enqueueSnackbar("file has successfully generated", { variant: "success" })
                 })
@@ -34,12 +38,25 @@ export function Form() {
         }
     }
 
+    const handleDownloadButton = () => {
+        downloadFile(fileName, fileType, downloadUrl)
+
+        enqueueSnackbar("please await download start", { variant: "info" })
+
+        setDownloadUrl('')
+        setFileName('')
+        setFileSize('')
+        setFileType('')
+        setValueSize('')
+    }
+
     return (
         <>
+            <Loading open={loading} />
             {downloadUrl && <Button
                 sx={{ height: "12em", width: "20em", margin: "auto auto" }}
                 variant="contained"
-                onClick={() => downloadFile(fileName, fileType, downloadUrl)}>download</Button>}
+                onClick={() => handleDownloadButton()}>download</Button>}
             {!downloadUrl &&
                 <form onSubmit={submitForm} className={style.form}>
                     <div className={style.wrapper}>
@@ -98,7 +115,6 @@ export function Form() {
                     </div>
                     <div>
                         <Button variant="contained" type="submit">Generate</Button>
-
                     </div>
                 </form>
             }
