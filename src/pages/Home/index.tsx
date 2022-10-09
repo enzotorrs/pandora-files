@@ -3,6 +3,7 @@ import style from './Home.module.scss'
 import { SnackbarProvider } from 'notistack';
 import { Header } from '../../components/Header'
 import { Form } from './Form'
+import { Footer } from '../../components/Footer';
 
 export function Home() {
 
@@ -14,6 +15,7 @@ export function Home() {
                     <Form></Form>
                 </section>
             </SnackbarProvider>
+            <Footer/>
         </>
 
     )
