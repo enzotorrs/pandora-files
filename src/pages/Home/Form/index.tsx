@@ -37,7 +37,7 @@ export function Form() {
     return (
         <>
             {downloadUrl && <Button
-                sx={{height: "50%", width: "50%", margin: "auto auto"}}
+                sx={{ height: "12em", width: "20em", margin: "auto auto" }}
                 variant="contained"
                 onClick={() => downloadFile(fileName, fileType, downloadUrl)}>download</Button>}
             {!downloadUrl &&
@@ -45,29 +45,33 @@ export function Form() {
                     <div className={style.wrapper}>
                         <div className={style.input_wrapper}>
                             <TextField
+                                sx={{ backgroundColor: "#fff" }}
                                 value={fileName}
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFileName(event.target.value)}
                                 label="File name"
                                 required
                             />
                             <FormControl size="small" sx={{ minWidth: 80 }}>
-                            <InputLabel id="fileTypeLabel">Type</InputLabel>
-                            <Select
-                                labelId="fileTypeLabel"
-                                id="fileType"
-                                value={fileType}
-                                label="Type"
-                                autoWidth
-                                onChange={(event: SelectChangeEvent) => setFileType(event.target.value)}
-                            >
-                                <MenuItem value={".txt"}>.txt</MenuItem>
-                                <MenuItem value={".png"}>.png</MenuItem>
-                                <MenuItem value={".jpeg"}>.jpeg</MenuItem>
-                            </Select>
+                                <InputLabel id="fileTypeLabel">Type</InputLabel>
+                                <Select
+                                    sx={{ backgroundColor: "#fff" }}
+                                    labelId="fileTypeLabel"
+                                    id="fileType"
+                                    value={fileType}
+                                    label="Type"
+                                    autoWidth
+                                    required
+                                    onChange={(event: SelectChangeEvent) => setFileType(event.target.value)}
+                                >
+                                    <MenuItem value={".txt"}>.txt</MenuItem>
+                                    <MenuItem value={".png"}>.png</MenuItem>
+                                    <MenuItem value={".jpeg"}>.jpeg</MenuItem>
+                                </Select>
                             </FormControl>
                         </div>
                         <div className={style.input_wrapper}>
                             <TextField
+                                sx={{ backgroundColor: "#fff" }}
                                 value={fileSize}
                                 type="number"
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFileSize(event.target.value)}
@@ -75,18 +79,20 @@ export function Form() {
                                 required
                             />
                             <FormControl size="small" sx={{ minWidth: 80 }}>
-                            <InputLabel id="fileGLabel">Value</InputLabel>
-                            <Select
-                                labelId="fileGLabel"
-                                id="fileG"
-                                value={valueSize}
-                                label="Value"
-                                autoWidth
-                                onChange={(event: SelectChangeEvent) => setValueSize(event.target.value)}
-                            >
-                                <MenuItem value={1}>MB</MenuItem>
-                                <MenuItem value={1024}>GB</MenuItem>
-                            </Select>
+                                <InputLabel id="fileGLabel">Value</InputLabel>
+                                <Select
+                                    sx={{ backgroundColor: "#fff" }}
+                                    labelId="fileGLabel"
+                                    id="fileG"
+                                    value={valueSize}
+                                    label="Value"
+                                    autoWidth
+                                    required
+                                    onChange={(event: SelectChangeEvent) => setValueSize(event.target.value)}
+                                >
+                                    <MenuItem value={1}>MB</MenuItem>
+                                    <MenuItem value={1024}>GB</MenuItem>
+                                </Select>
                             </FormControl>
                         </div>
                     </div>
