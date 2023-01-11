@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import config from "../../../../../config.json"
 
 function donwloadFileFromAxios(response: AxiosResponse, fileName: string) {
         const href = URL.createObjectURL(response.data);
@@ -16,7 +17,7 @@ function donwloadFileFromAxios(response: AxiosResponse, fileName: string) {
 
 export function downloadFile(fileName: string, fileType: string, downloadUrl: string){
         axios({
-                url: 'http://localhost:3003' + downloadUrl,
+                url: config["api-url"] + downloadUrl,
                 method: 'GET',
                 responseType: 'blob',
         }).then((response) => {

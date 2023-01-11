@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from "axios"
+import config from "../../../config.json"
 
 import style from './Form.module.scss'
 import { isValideSize } from "./utils/validate/fileSize"
@@ -24,7 +25,7 @@ export function Form() {
         setLoading(true)
 
         if (isValideSize(calculetedFileSize)) {
-            axios.post('http://localhost:3003/generate', {
+            axios.post(`${config["api-url"]}/generate`, {
                 size: calculetedFileSize,
             })
                 .then(response => {
