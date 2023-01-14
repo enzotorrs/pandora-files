@@ -35,7 +35,8 @@ export function Form() {
                 })
         }
         else {
-            enqueueSnackbar("file size needs to be greater than 0 and less than 10GB", { variant: "error" })
+            enqueueSnackbar(`file size needs to be greater than 0 and less than ${config["file-size-limit-in-Gb"]}GB`, { variant: "error" })
+            setLoading(false)
         }
     }
 

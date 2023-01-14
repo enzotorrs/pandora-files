@@ -1,1 +1,4 @@
-{"api-url": "http://enzotorres.ddns.net/api"}
+{
+    "api-url": "http://enzotorres.ddns.net/api",
+    "file-size-limit-in-Gb": 10
+}
