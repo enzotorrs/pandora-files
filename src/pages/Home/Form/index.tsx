@@ -6,7 +6,6 @@ import style from './Form.module.scss'
 import { isValideSize } from "./utils/validate/fileSize"
 import { calculateFileSize } from "./utils/calculateFileSize"
 import { useSnackbar } from "notistack"
-import { downloadFile } from "./utils/download/file"
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 import { Loading } from "./Loading"
 
@@ -27,10 +26,11 @@ export function Form() {
         if (isValideSize(calculetedFileSize)) {
             axios.post(`${config["api-url"]}/generate`, {
                 size: calculetedFileSize,
+                fileName: fileName+fileType
             })
                 .then(response => {
                     setLoading(false)
-                    setDownloadUrl(response.data.url)
+                    setDownloadUrl(config["api-url"]+response.data.url)
                     enqueueSnackbar("file has successfully generated", { variant: "success" })
                 })
         }
@@ -40,10 +40,6 @@ export function Form() {
     }
 
     const handleDownloadButton = () => {
-        downloadFile(fileName, fileType, downloadUrl)
-
-        enqueueSnackbar("please await download start", { variant: "info" })
-
         setDownloadUrl('')
         setFileName('')
         setFileSize('')
@@ -55,9 +51,11 @@ export function Form() {
         <>
             <Loading open={loading} />
             {downloadUrl && <Button
+                href={downloadUrl}
                 sx={{ height: "12em", width: "20em", margin: "auto auto" }}
                 variant="contained"
-                onClick={() => handleDownloadButton()}>download</Button>}
+                onClick={handleDownloadButton}
+                >download</Button>}
             {!downloadUrl &&
                 <form onSubmit={submitForm} className={style.form}>
                     <div className={style.wrapper}>
