@@ -26,7 +26,7 @@ export function Form() {
         if (isValideSize(calculetedFileSize)) {
             axios.post(`${config["api-url"]}/generate`, {
                 size: calculetedFileSize,
-                fileName: fileName+fileType
+                file_name: fileName+fileType
             })
                 .then(response => {
                     setLoading(false)
