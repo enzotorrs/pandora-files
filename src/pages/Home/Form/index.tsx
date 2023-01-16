@@ -30,7 +30,7 @@ export function Form() {
             })
                 .then(response => {
                     setLoading(false)
-                    setDownloadUrl(config["api-url"]+response.data.url)
+                    setDownloadUrl(config["files-url"]+response.data.url)
                     enqueueSnackbar("file has successfully generated", { variant: "success" })
                 })
         }
