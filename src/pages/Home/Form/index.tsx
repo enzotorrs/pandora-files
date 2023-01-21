@@ -11,7 +11,7 @@ type formProps = {
     setFileName: any,
     setFileType: any,
     setFileSize: any,
-    setValueSize: any 
+    setValueSize: any
 }
 
 export function Form(props: formProps) {

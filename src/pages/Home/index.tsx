@@ -1,6 +1,6 @@
 import 'normalize.css'
 import { Button } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
@@ -12,8 +12,19 @@ import { Footer } from '../../components/Footer';
 import { calculateFileSize } from './Form/utils/calculateFileSize';
 import { isValideSize } from './Form/utils/validate/fileSize';
 import config from "../../config.json"
+import io from 'socket.io-client'
+
+const socket = io(config["socket-server-url"])
 
 export function Home() {
+    useEffect(() => {
+        socket.on("finish_process", (url) => {
+            console.log(url)
+            setDownloadUrl(config["files-url"] + url)
+            enqueueSnackbar("Your file has ben generated successfully!", {variant: "success"})
+        })
+    }, [])
+
     const [fileName, setFileName] = useState<string>('')
     const [fileSize, setFileSize] = useState<string>('')
     const [downloadUrl, setDownloadUrl] = useState<string>('')
@@ -32,10 +43,9 @@ export function Home() {
                 size: calculetedFileSize,
                 file_name: fileName + fileType
             })
-                .then(response => {
+                .then(() => {
                     setLoading(false)
-                    setDownloadUrl(config["files-url"] + response.data.url)
-                    enqueueSnackbar("file has successfully generated", { variant: "success" })
+                    enqueueSnackbar("Your file is being generated", { variant: "info" })
                 })
         }
         else {
