@@ -21,7 +21,7 @@ export function Home() {
         socket.on("finish_process", (url) => {
             console.log(url)
             setDownloadUrl(config["files-url"] + url)
-            enqueueSnackbar("Your file has ben generated successfully!", {variant: "success"})
+            enqueueSnackbar("Your file has ben generated successfully!", { variant: "success" })
         })
     }, [])
 
@@ -55,6 +55,10 @@ export function Home() {
     }
 
     const handleDownloadButton = () => {
+        resetPage();
+    }
+
+    const resetPage = () => {
         setDownloadUrl('')
         setFileName('')
         setFileSize('')
