@@ -18,9 +18,13 @@ const socket = io(config["socket-server-url"])
 
 export function Home() {
     useEffect(() => {
-        socket.on("finish_process", (url) => {
-            console.log(url)
-            setDownloadUrl(config["files-url"] + url)
+        socket.on("finish_process", (message) => {
+            if (message.error) {
+                enqueueSnackbar("An error occured in file process, please try again later", { variant: "error" })
+                resetPage()
+                return
+            }
+            setDownloadUrl(config["files-url"] + message.url)
             enqueueSnackbar("Your file has ben generated successfully!", { variant: "success" })
         })
     }, [])
@@ -46,6 +50,11 @@ export function Home() {
                 .then(() => {
                     setLoading(false)
                     enqueueSnackbar("Your file is being generated", { variant: "info" })
+                })
+                .catch(() => {
+                    setLoading(false)
+                    enqueueSnackbar("An error occured trying generate your file, please try again", { variant: "error" })
+
                 })
         }
         else {
