@@ -1,5 +1,5 @@
 import 'normalize.css'
-import { Button } from '@mui/material';
+import { Button, LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -24,6 +24,7 @@ export function Home() {
                 resetPage()
                 return
             }
+            setProcessing(false)
             setDownloadUrl(config["files-url"] + message.url)
             enqueueSnackbar("Your file has ben generated successfully!", { variant: "success" })
         })
@@ -35,6 +36,7 @@ export function Home() {
     const [fileType, setFileType] = useState<string>('')
     const [valueSize, setValueSize] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
+    const [processing, setProcessing] = useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
@@ -49,6 +51,7 @@ export function Home() {
             })
                 .then(() => {
                     setLoading(false)
+                    setProcessing(true)
                     enqueueSnackbar("Your file is being generated", { variant: "info" })
                 })
                 .catch(() => {
@@ -78,7 +81,7 @@ export function Home() {
     return (
         <>
             <Header />
-            <section className={style.container}>
+            <section className={style.process}>
                 <Loading open={loading} />
                 {downloadUrl && <Button
                     href={downloadUrl}
@@ -86,7 +89,7 @@ export function Home() {
                     variant="contained"
                     onClick={handleDownloadButton}
                 >download</Button>}
-                {!downloadUrl &&
+                {!downloadUrl && !processing &&
                     <Form
                         submitForm={submitForm}
                         fileType={fileType}
@@ -99,6 +102,10 @@ export function Home() {
                         setFileType={setFileType}
                     ></Form>
                 }
+                {processing && <div className={style.teste}>
+                    <p>Processing</p>
+                    <LinearProgress />
+                </div>}
             </section>
             <Footer />
         </>
