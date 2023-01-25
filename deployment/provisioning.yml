@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: "Build app"
+      local_action: shell npm run build
+    - name: "Copy build to server"
+      copy:
+        src: ../build/
+        dest: "{{ dest_dir}}"
