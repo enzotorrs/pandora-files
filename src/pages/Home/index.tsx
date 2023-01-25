@@ -81,7 +81,7 @@ export function Home() {
     return (
         <>
             <Header />
-            <section className={style.process}>
+            <section className={style.container}>
                 <Loading open={loading} />
                 {downloadUrl && <Button
                     href={downloadUrl}
