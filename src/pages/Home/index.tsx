@@ -102,7 +102,7 @@ export function Home() {
                         setFileType={setFileType}
                     ></Form>
                 }
-                {processing && <div className={style.teste}>
+                {processing && <div className={style.process}>
                     <p>Processing</p>
                     <LinearProgress />
                 </div>}
