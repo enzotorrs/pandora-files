@@ -1,5 +1,5 @@
 import 'normalize.css'
-import { Button, LinearProgress } from '@mui/material';
+import { Button, ClickAwayListener, LinearProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -83,12 +83,16 @@ export function Home() {
             <Header />
             <section className={style.container}>
                 <Loading open={loading} />
-                {downloadUrl && <Button
-                    href={downloadUrl}
-                    sx={{ height: "12em", width: "20em", margin: "auto auto" }}
-                    variant="contained"
-                    onClick={handleDownloadButton}
-                >download</Button>}
+                {downloadUrl &&
+                    <ClickAwayListener onClickAway={() => { resetPage() }}>
+                        <Button
+                            href={downloadUrl}
+                            sx={{ height: "12em", width: "20em", margin: "auto auto" }}
+                            variant="contained"
+                            onClick={handleDownloadButton}
+                        >download
+                        </Button>
+                    </ClickAwayListener>}
                 {!downloadUrl && !processing &&
                     <Form
                         submitForm={submitForm}
