@@ -41,6 +41,7 @@ export function Form(props: formProps) {
                             <MenuItem value={".txt"}>.txt</MenuItem>
                             <MenuItem value={".png"}>.png</MenuItem>
                             <MenuItem value={".jpeg"}>.jpeg</MenuItem>
+                            <MenuItem value={".mp4"}>.mp4</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
