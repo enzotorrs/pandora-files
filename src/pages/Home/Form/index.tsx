@@ -8,10 +8,11 @@ type formProps = {
     fileName: string,
     fileSize: string,
     valueSize: string
+    fileSizeError: boolean,
     setFileName: any,
     setFileType: any,
     setFileSize: any,
-    setValueSize: any
+    setValueSize: any,
 }
 
 export function Form(props: formProps) {
@@ -48,6 +49,7 @@ export function Form(props: formProps) {
                 <div className={style.input_wrapper}>
                     <TextField
                         sx={{ backgroundColor: "#fff" }}
+                        error={props.fileSizeError}
                         value={props.fileSize}
                         type="number"
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.setFileSize(event.target.value)}

@@ -36,6 +36,7 @@ export function Home() {
     const [fileType, setFileType] = useState<string>('')
     const [valueSize, setValueSize] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
+    const [fileSizeError, setFileSizeError] = useState<boolean>(false)
     const [processing, setProcessing] = useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar();
 
@@ -78,6 +79,12 @@ export function Home() {
         setValueSize('')
     }
 
+    const handleOnChangeFileSize = (newFileSize: string) => {
+        setFileSize(newFileSize)
+        const calculetedFileSize = calculateFileSize(newFileSize, valueSize)
+        setFileSizeError(!isValideSize(calculetedFileSize))
+    }
+
     return (
         <>
             <Header />
@@ -100,7 +107,8 @@ export function Home() {
                         fileName={fileName}
                         fileSize={fileSize}
                         valueSize={valueSize}
-                        setFileSize={setFileSize}
+                        fileSizeError={fileSizeError}
+                        setFileSize={handleOnChangeFileSize}
                         setFileName={setFileName}
                         setValueSize={setValueSize}
                         setFileType={setFileType}
