@@ -40,14 +40,15 @@ export function Home() {
     const [processing, setProcessing] = useState<boolean>(false)
     const { enqueueSnackbar } = useSnackbar();
 
+    let calculatedFileSize: number
+
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        const calculetedFileSize = calculateFileSize(fileSize, valueSize)
         setLoading(true)
 
-        if (isValideSize(calculetedFileSize)) {
+        if (!fileSizeError) {
             axios.post(`${config["api-url"]}/generate`, {
-                size: calculetedFileSize,
+                size: calculatedFileSize,
                 file_name: fileName + fileType
             })
                 .then(() => {
@@ -67,6 +68,13 @@ export function Home() {
         }
     }
 
+    const updateCalculatedFileSize = (newFileSize=fileSize, newValueSize=valueSize) => {
+        const newCalculetedFileSize = calculateFileSize(newFileSize, newValueSize)
+        calculatedFileSize = newCalculetedFileSize
+        setFileSizeError(!isValideSize(calculatedFileSize))
+
+    }
+
     const handleDownloadButton = () => {
         resetPage();
     }
@@ -81,8 +89,12 @@ export function Home() {
 
     const handleOnChangeFileSize = (newFileSize: string) => {
         setFileSize(newFileSize)
-        const calculetedFileSize = calculateFileSize(newFileSize, valueSize)
-        setFileSizeError(!isValideSize(calculetedFileSize))
+        updateCalculatedFileSize(newFileSize=newFileSize)
+    }
+
+    const handleOnChangeValueSize= (newValueSize: string)=>{
+        setValueSize(newValueSize)
+        updateCalculatedFileSize(undefined, newValueSize=newValueSize)
     }
 
     return (
@@ -110,7 +122,7 @@ export function Home() {
                         fileSizeError={fileSizeError}
                         setFileSize={handleOnChangeFileSize}
                         setFileName={setFileName}
-                        setValueSize={setValueSize}
+                        setValueSize={handleOnChangeValueSize}
                         setFileType={setFileType}
                     ></Form>
                 }
