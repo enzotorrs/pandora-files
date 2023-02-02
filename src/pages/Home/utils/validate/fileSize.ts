@@ -1,4 +1,4 @@
-import config from "../../../../../config.json"
+import config from "../../../../config.json"
 
 export function isValideSize(size: number) {
     console.log(size)

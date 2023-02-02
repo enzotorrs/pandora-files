@@ -7,10 +7,10 @@ import axios from 'axios';
 import style from './Home.module.scss'
 import { Header } from '../../components/Header'
 import { Form } from './Form'
-import { Loading } from './Form/Loading';
+import { Loading } from './Loading';
 import { Footer } from '../../components/Footer';
-import { calculateFileSize } from './Form/utils/calculateFileSize';
-import { isValideSize } from './Form/utils/validate/fileSize';
+import { calculateFileSize } from './utils/calculateFileSize';
+import { isValideSize } from './utils/validate/fileSize';
 import config from "../../config.json"
 import io from 'socket.io-client'
 
