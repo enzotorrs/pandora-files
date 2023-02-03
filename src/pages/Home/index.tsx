@@ -1,6 +1,6 @@
 import 'normalize.css'
 import { Button, ClickAwayListener, LinearProgress } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 
@@ -40,11 +40,10 @@ export function Home() {
     const [processing, setProcessing] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
 
-    let calculatedFileSize: number
+    const calculatedFileSize = useRef(0)
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        setLoading(true)
 
         if (fileSizeError) {
             enqueueSnackbar(`file size needs to be greater than 0 and less than ${config["file-size-limit-in-Gb"]}GB`, { variant: "error" })
@@ -52,8 +51,14 @@ export function Home() {
             return
         }
 
+        postFileRequest()
+
+    }
+
+    const postFileRequest = () => {
+        setLoading(true)
         axios.post(`${config["api-url"]}/generate`, {
-            size: calculatedFileSize,
+            size: calculatedFileSize.current,
             file_name: fileName + fileType
         })
             .then(() => {
@@ -64,14 +69,13 @@ export function Home() {
             .catch(() => {
                 setLoading(false)
                 enqueueSnackbar("An error occured trying generate your file, please try again", { variant: "error" })
-
             })
     }
 
     const updateCalculatedFileSize = (newFileSize = fileSize, newValueSize = valueSize) => {
         const newCalculetedFileSize = calculateFileSize(newFileSize, newValueSize)
-        calculatedFileSize = newCalculetedFileSize
-        setFileSizeError(!isValideSize(calculatedFileSize))
+        calculatedFileSize.current = newCalculetedFileSize
+        setFileSizeError(!isValideSize(calculatedFileSize.current))
 
     }
 
