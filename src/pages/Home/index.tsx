@@ -3,7 +3,6 @@ import 'normalize.css'
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
-import io from 'socket.io-client'
 
 // style and config
 import style from './Home.module.scss'
@@ -20,12 +19,11 @@ import { Form } from './Form'
 import { Footer } from '../../components/Footer';
 import { Processing } from './Processing';
 import { DownloadButton } from './DownloadButton';
-
-const socket = io(config["socket-server-url"])
+import { onFinishProcess } from '../../socket/events';
 
 export function Home() {
     useEffect(() => {
-        socket.on("finish_process", (message) => {
+        onFinishProcess((message: {error?: boolean, url: string }) => {
             if (message.error) {
                 enqueueSnackbar("An error occured in file process, please try again later", { variant: "error" })
                 resetPage()
@@ -47,7 +45,6 @@ export function Home() {
     const [processing, setProcessing] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
     const calculatedFileSize = useRef(0)
-
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
