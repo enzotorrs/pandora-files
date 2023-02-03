@@ -46,29 +46,29 @@ export function Home() {
         event.preventDefault()
         setLoading(true)
 
-        if (!fileSizeError) {
-            axios.post(`${config["api-url"]}/generate`, {
-                size: calculatedFileSize,
-                file_name: fileName + fileType
-            })
-                .then(() => {
-                    setLoading(false)
-                    setProcessing(true)
-                    enqueueSnackbar("Your file is being generated", { variant: "info" })
-                })
-                .catch(() => {
-                    setLoading(false)
-                    enqueueSnackbar("An error occured trying generate your file, please try again", { variant: "error" })
-
-                })
-        }
-        else {
+        if (fileSizeError) {
             enqueueSnackbar(`file size needs to be greater than 0 and less than ${config["file-size-limit-in-Gb"]}GB`, { variant: "error" })
             setLoading(false)
+            return
         }
+
+        axios.post(`${config["api-url"]}/generate`, {
+            size: calculatedFileSize,
+            file_name: fileName + fileType
+        })
+            .then(() => {
+                setLoading(false)
+                setProcessing(true)
+                enqueueSnackbar("Your file is being generated", { variant: "info" })
+            })
+            .catch(() => {
+                setLoading(false)
+                enqueueSnackbar("An error occured trying generate your file, please try again", { variant: "error" })
+
+            })
     }
 
-    const updateCalculatedFileSize = (newFileSize=fileSize, newValueSize=valueSize) => {
+    const updateCalculatedFileSize = (newFileSize = fileSize, newValueSize = valueSize) => {
         const newCalculetedFileSize = calculateFileSize(newFileSize, newValueSize)
         calculatedFileSize = newCalculetedFileSize
         setFileSizeError(!isValideSize(calculatedFileSize))
@@ -89,12 +89,12 @@ export function Home() {
 
     const handleOnChangeFileSize = (newFileSize: string) => {
         setFileSize(newFileSize)
-        updateCalculatedFileSize(newFileSize=newFileSize)
+        updateCalculatedFileSize(newFileSize = newFileSize)
     }
 
-    const handleOnChangeValueSize= (newValueSize: string)=>{
+    const handleOnChangeValueSize = (newValueSize: string) => {
         setValueSize(newValueSize)
-        updateCalculatedFileSize(undefined, newValueSize=newValueSize)
+        updateCalculatedFileSize(undefined, newValueSize = newValueSize)
     }
 
     return (
