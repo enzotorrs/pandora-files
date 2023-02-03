@@ -1,5 +1,5 @@
 import 'normalize.css'
-import { Button, ClickAwayListener, LinearProgress } from '@mui/material';
+import { Button, ClickAwayListener } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -13,6 +13,7 @@ import { calculateFileSize } from './utils/calculateFileSize';
 import { isValideSize } from './utils/validate/fileSize';
 import config from "../../config.json"
 import io from 'socket.io-client'
+import { Processing } from './Processing';
 
 const socket = io(config["socket-server-url"])
 
@@ -130,10 +131,7 @@ export function Home() {
                         setFileType={setFileType}
                     ></Form>
                 }
-                {processing && <div className={style.process}>
-                    <p>Processing</p>
-                    <LinearProgress />
-                </div>}
+                {processing && <Processing />}
             </section>
             <Footer />
         </>
