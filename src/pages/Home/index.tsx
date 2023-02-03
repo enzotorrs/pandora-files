@@ -30,14 +30,14 @@ export function Home() {
         })
     }, [])
 
-    const [fileName, setFileName] = useState<string>('')
-    const [fileSize, setFileSize] = useState<string>('')
-    const [downloadUrl, setDownloadUrl] = useState<string>('')
-    const [fileType, setFileType] = useState<string>('')
-    const [valueSize, setValueSize] = useState<string>('')
-    const [loading, setLoading] = useState<boolean>(false)
-    const [fileSizeError, setFileSizeError] = useState<boolean>(false)
-    const [processing, setProcessing] = useState<boolean>(false)
+    const [fileName, setFileName] = useState('')
+    const [fileSize, setFileSize] = useState('')
+    const [downloadUrl, setDownloadUrl] = useState('')
+    const [fileType, setFileType] = useState('')
+    const [valueSize, setValueSize] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [fileSizeError, setFileSizeError] = useState(false)
+    const [processing, setProcessing] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
 
     let calculatedFileSize: number
