@@ -1,5 +1,4 @@
 import 'normalize.css'
-import { Button, ClickAwayListener } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -14,6 +13,7 @@ import { isValideSize } from './utils/validate/fileSize';
 import config from "../../config.json"
 import io from 'socket.io-client'
 import { Processing } from './Processing';
+import { DownloadButton } from './DownloadButton';
 
 const socket = io(config["socket-server-url"])
 
@@ -40,8 +40,8 @@ export function Home() {
     const [fileSizeError, setFileSizeError] = useState(false)
     const [processing, setProcessing] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
-
     const calculatedFileSize = useRef(0)
+
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -53,7 +53,6 @@ export function Home() {
         }
 
         postFileRequest()
-
     }
 
     const postFileRequest = () => {
@@ -80,10 +79,6 @@ export function Home() {
 
     }
 
-    const handleDownloadButton = () => {
-        resetPage();
-    }
-
     const resetPage = () => {
         setDownloadUrl('')
         setFileName('')
@@ -107,16 +102,11 @@ export function Home() {
             <Header />
             <section className={style.container}>
                 <Loading open={loading} />
-                {downloadUrl &&
-                    <ClickAwayListener onClickAway={() => { resetPage() }}>
-                        <Button
-                            href={downloadUrl}
-                            sx={{ height: "12em", width: "20em", margin: "auto auto" }}
-                            variant="contained"
-                            onClick={handleDownloadButton}
-                        >download
-                        </Button>
-                    </ClickAwayListener>}
+                {downloadUrl && <DownloadButton
+                    onClickAway={resetPage}
+                    downloadUrl={downloadUrl}
+                    handleDownloadButton={resetPage}
+                />}
                 {!downloadUrl && !processing &&
                     <Form
                         submitForm={submitForm}
