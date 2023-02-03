@@ -1,17 +1,23 @@
+//third party
 import 'normalize.css'
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
+import io from 'socket.io-client'
 
+// style and config
 import style from './Home.module.scss'
-import { Header } from '../../components/Header'
-import { Form } from './Form'
-import { Loading } from './Loading';
-import { Footer } from '../../components/Footer';
+import config from "../../config.json"
+
+//validates
 import { calculateFileSize } from './utils/calculateFileSize';
 import { isValideSize } from './utils/validate/fileSize';
-import config from "../../config.json"
-import io from 'socket.io-client'
+
+//components
+import { Header } from '../../components/Header'
+import { Loading } from './Loading';
+import { Form } from './Form'
+import { Footer } from '../../components/Footer';
 import { Processing } from './Processing';
 import { DownloadButton } from './DownloadButton';
 

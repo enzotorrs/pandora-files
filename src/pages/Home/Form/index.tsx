@@ -1,6 +1,8 @@
-import style from './Form.module.scss'
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 import { FormEventHandler } from 'react'
+
+import style from './Form.module.scss'
+
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 
 type formProps = {
     submitForm: FormEventHandler,
