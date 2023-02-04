@@ -1,4 +1,4 @@
-import config from "../config.json"
+import config from "../config"
 import io from 'socket.io-client'
 
 const socket = io(config["socket-server-url"])

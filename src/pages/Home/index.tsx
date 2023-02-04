@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // style and config
 import style from './Home.module.scss'
-import config from "../../config.json"
+import config from "../../config"
 
 //validates
 import { calculateFileSize } from './utils/calculateFileSize';

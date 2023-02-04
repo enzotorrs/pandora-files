@@ -1,0 +1,6 @@
+{
+    "api-url": "http://localhost:3003",
+    "files-url": "http://localhost:3003",
+    "file-size-limit-in-Gb": 10,
+    "socket-server-url": "http://localhost:3002"
+}
