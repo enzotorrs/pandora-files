@@ -19,11 +19,11 @@ import { Form } from './Form'
 import { Footer } from '../../components/Footer';
 import { Processing } from './Processing';
 import { DownloadButton } from './DownloadButton';
-import { onFinishProcess } from '../../socket/events';
+import { getSocketId, onFinishProcess } from '../../socket/events';
 
 export function Home() {
     useEffect(() => {
-        onFinishProcess((message: {error?: boolean, url: string }) => {
+        onFinishProcess((message: { error?: boolean, url: string }) => {
             if (message.error) {
                 enqueueSnackbar("An error occured in file process, please try again later", { variant: "error" })
                 resetPage()
@@ -45,9 +45,11 @@ export function Home() {
     const [processing, setProcessing] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
     const calculatedFileSize = useRef(0)
+    const socketId = useRef<string>()
 
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        socketId.current = getSocketId()
 
         if (fileSizeError) {
             enqueueSnackbar(`file size needs to be greater than 0 and less than ${config["file-size-limit-in-Gb"]}GB`, { variant: "error" })
@@ -62,7 +64,8 @@ export function Home() {
         setLoading(true)
         axios.post(`${config["api-url"]}/generate`, {
             size: calculatedFileSize.current,
-            file_name: fileName + fileType
+            file_name: fileName + fileType,
+            socketId: socketId.current
         })
             .then(() => {
                 setLoading(false)
