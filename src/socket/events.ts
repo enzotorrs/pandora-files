@@ -10,4 +10,7 @@ export function getSocketId() {
 export function onFinishProcess(callback: any) {
     socket.on("finish_process", callback)
 }
+export function onProgress(callback: any) {
+    socket.on("progress", callback)
+}
 

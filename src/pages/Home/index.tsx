@@ -19,10 +19,13 @@ import { Form } from './Form'
 import { Footer } from '../../components/Footer';
 import { Processing } from './Processing';
 import { DownloadButton } from './DownloadButton';
-import { getSocketId, onFinishProcess } from '../../socket/events';
+import { getSocketId, onFinishProcess, onProgress } from '../../socket/events';
 
 export function Home() {
     useEffect(() => {
+        onProgress((message: {percent: number})=>{
+            setPercentProgress(message.percent)
+        })
         onFinishProcess((message: { error?: boolean, url: string }) => {
             if (message.error) {
                 enqueueSnackbar("An error occured in file process, please try again later", { variant: "error" })
@@ -43,6 +46,7 @@ export function Home() {
     const [loading, setLoading] = useState(false)
     const [fileSizeError, setFileSizeError] = useState(false)
     const [processing, setProcessing] = useState(false)
+    const [percentProgress, setPercentProgress] = useState<number>()
     const { enqueueSnackbar } = useSnackbar();
     const calculatedFileSize = useRef(0)
     const socketId = useRef<string>()
@@ -127,7 +131,7 @@ export function Home() {
                         setFileType={setFileType}
                     ></Form>
                 }
-                {processing && <Processing />}
+                {processing && <Processing progress={percentProgress || 0}/>}
             </section>
             <Footer />
         </>
